@@ -1,0 +1,81 @@
+<div class="container">
+	<form [formGroup]="recipefrm">
+		<div class="row">
+			<div class='col-lg-6'>
+				<h1>Recipies List:-</h1>
+				<hr>
+				<div *ngFor='let v of recipyData;let i=index;'>
+					<div class="row">
+						<div class="col-lg-5">
+							<label>#{{i+1}}  {{v.value.name}}</label>
+						</div>
+						<div class="col-lg-7">
+			
+							<label>{{v.value.cost}}Rs.</label>
+							<button class="btn btn-primary" (click)='editRecipy(v)'>Edit</button>
+							<button class="btn btn-danger" (click)='deleteRecipy(v.key)'>Delete</button>
+						</div>
+					</div>
+					<label>Ingredients:-</label>
+					<div *ngFor="let ingreds of v.value.ingredients">
+						<div class="row">
+							<div class="col-lg-3">
+								<label>{{ingreds.iName}}</label>
+							</div>
+							<div class="col-lg-3">
+								<label>{{ingreds.iWeight}}gm.</label>
+							</div>
+						</div>
+					</div>
+					<hr>
+			
+				</div>
+			
+			</div>
+			<div class="col-lg-6">
+				<h1>Add Recipy:-</h1>
+				<p>
+					Name:
+					<input formControlName="name" class="form-control">
+				</p>
+				<p>
+					Cost:
+					<input formControlName="cost" class="form-control">
+				</p>
+				<p>
+					Ingredients:
+					<button class="btn btn-primary" (click)='addItemForm()'>+</button>
+				</p>
+				<div formArrayName="ingredients">
+
+					<div *ngFor="let x of recipefrm.get('ingredients').controls;let i = index">
+						<div [formGroupName]="i" class="panel panel-form">
+							<div class="panel panel-heading">
+								#{{i+1}}
+							</div>
+							<div class="panel panel-body">
+								<div class="col-lg-6">
+								<label>Name: </label> 
+								<button class="btn btn-sm btn-danger" (click)="delIngredientForm(i)">
+									remove
+								</button>
+								<input formControlName="iName" class="form-control">
+								</div>
+								<div class="col-lg-6">
+								<label>weight: </label>
+								<input formControlName="iWeight" class="form-control">
+								</div>
+							</div>
+						</div><hr>
+					</div>
+				</div>
+
+				<p>
+					<button *ngIf="btn_stt" class="btn btn-primary" (click)='submit()'>Submit</button>
+					<button *ngIf="!btn_stt" class="btn btn-primary" (click)='update()'>Update</button>
+				</p>
+			</div>
+			
+		</div>
+	</form>
+</div>
